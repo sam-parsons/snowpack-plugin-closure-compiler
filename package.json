@@ -1,0 +1,19 @@
+{
+  "name": "snowpack-plugin-template",
+  "version": "1.0.0",
+  "description": "template for creating snowpack plugins",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "snowpack",
+    "snowpack-plugin",
+    "template"
+  ],
+  "author": "Sam Parsons <samparsons269@gmail.com> (http://sam-parsons.github.io/)",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "27.0.4"
+  }
+}
