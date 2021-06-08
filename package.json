@@ -1,6 +1,6 @@
 {
   "name": "snowpack-plugin-closure-compiler",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "template for creating snowpack plugins",
   "main": "plugin.js",
   "scripts": {
