@@ -1,11 +1,14 @@
 {
-  "name": "snowpack-plugin-template",
+  "name": "snowpack-plugin-closure-compiler",
   "version": "1.0.0",
   "description": "template for creating snowpack plugins",
   "main": "plugin.js",
   "scripts": {
     "test": "jest"
   },
+  "files": [
+    "plugin.js"
+  ],
   "keywords": [
     "snowpack",
     "snowpack-plugin",
@@ -15,5 +18,9 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "27.0.4"
+  },
+  "dependencies": {
+    "glob": "7.1.7",
+    "google-closure-compiler": "20210601.0.0"
   }
 }
