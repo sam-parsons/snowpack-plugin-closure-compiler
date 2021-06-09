@@ -72,34 +72,6 @@ Default: `ECMASCRIPT5`
 
 Determines ECMASCRIPT version of output file - use one of the values referenced in the `languageIn` property.
 
-
-<!-- ### `delimiters`
-
-Type: `array`<br>
-Default: `null`
-
-Declares multiple file extensions and delimiters to be used during build. The extension and delimiter are indicated by a custom file extension alone - a `.%sv` file will be automatically delimited with `%`.
-
-### `processRow`
-
-Type: `function`<br>
-Default: `null`
-
-Specifies a function which processes and manipulates each row in the parsed array. The function can manipulate the passed `row`.
-
-This option could be used for converting numeric `string` values into `number` values - see example below.
-
-```js
-dsv({
-  processRows: (row, id) => {
-    Object.keys(row).forEach((key, id) => {
-      let value = row[key].trim();
-      row[key] = isNaN(Number(value)) ? value : Number(value);
-    });
-  },
-});
-``` -->
-
 ## Meta
 
 [LICENSE (MIT)](./LICENSE.md)
