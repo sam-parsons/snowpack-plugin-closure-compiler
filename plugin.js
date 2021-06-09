@@ -45,8 +45,9 @@ module.exports = function plugin(config, snowpackOptions) {
 
       // return promise to wait for compiler completion
       return new Promise((res, rej) => {
-        log('closure compiler processing complete');
+        log('closure compiler complete');
         compilerProcess.on('exit', res);
+        compilerProcess.on('error', rej);
       });
     },
   };
