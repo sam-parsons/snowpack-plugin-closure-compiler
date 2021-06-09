@@ -41,15 +41,6 @@ module.exports = {
   }],
 };
 ```
-<!-- 
-For other types of delimiters, set the `delimiter` property of the options object to the appropriate character. Note: You will have to set the file extension of your custom files to `.dsv`.
-
-```js
-module.exports = {
-  mount: { ... },
-  plugins: [['snowpack-plugin-dsv', { delimiter: '~' }]],
-};
-``` -->
 
 ## Options
 
@@ -80,6 +71,7 @@ Type: `string`<br>
 Default: `ECMASCRIPT5`
 
 Determines ECMASCRIPT version of output file - use one of the values referenced in the `languageIn` property.
+
 
 <!-- ### `delimiters`
 
