@@ -5,9 +5,7 @@ const glob = require('glob');
 module.exports = function plugin(config, snowpackOptions) {
   return {
     name: 'snowpack-plugin-closure-compiler',
-    async optimize(options) {
-      // TODO set up logging
-
+    async optimize({ log }) {
       // retreive all javascript files in build directory
       const files = glob.sync(config.buildOptions.out + '/**/*.js');
 
@@ -24,6 +22,7 @@ module.exports = function plugin(config, snowpackOptions) {
         // js_output_file: base + '/index.js',
       });
 
+      // save instance of child process to hang node process
       const compilerProcess = instance.run((exitCode, stdOut, stdErr) => {
         // handle user specified output file
         fs.writeFile(base + '/index.js', stdOut, (err) => {
@@ -31,9 +30,10 @@ module.exports = function plugin(config, snowpackOptions) {
           const deletableFiles = glob.sync(
             config.buildOptions.out + '/**/!(index).js'
           );
+          console.log(deletableFiles);
           deletableFiles.forEach((file) => {
             fs.unlink(file, (err) => {
-              console.log(file, 'deleted');
+              if (err) log('fs.unlink error');
             });
           });
         });
@@ -41,6 +41,7 @@ module.exports = function plugin(config, snowpackOptions) {
 
       // return promise to wait for compiler completion
       return new Promise((res, rej) => {
+        log('closure compiler processing complete');
         compilerProcess.on('exit', res);
       });
     },
