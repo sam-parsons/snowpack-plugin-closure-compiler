@@ -12,7 +12,8 @@
   "keywords": [
     "snowpack",
     "snowpack-plugin",
-    "template"
+    "google-closure-compiler",
+    "closure-compiler"
   ],
   "author": "Sam Parsons <samparsons269@gmail.com> (http://sam-parsons.github.io/)",
   "license": "MIT",
