@@ -13,24 +13,26 @@ module.exports = function plugin(config, snowpackOptions) {
       const bundleDir = config.mount[config.root + '/src'].url;
       const base = config.root + '/build' + bundleDir;
 
+      // path for intermittent bundle file
+      const tempOutputPath = base + '/temp.js';
+
       // create instance of compiler with user options/defaults
       const instance = new compiler({
         js: files,
-        languageIn: 'ECMASCRIPT_2019',
-        languageOut: 'ECMASCRIPT_2015',
-        // handle user specified output file
-        // js_output_file: base + '/index.js',
+        compilation_level: snowpackOptions.compilationLevel || 'SIMPLE',
+        js_output_file: tempOutputPath,
       });
 
       // save instance of child process to hang node process
       const compilerProcess = instance.run((exitCode, stdOut, stdErr) => {
         // handle user specified output file
-        fs.writeFile(base + '/index.js', stdOut, (err) => {
+        const writeFilePath =
+          base + '/' + (snowpackOptions.outputFile || 'index.js');
+        fs.writeFile(writeFilePath, tempOutputPath, (err) => {
           // remove older js files
           const deletableFiles = glob.sync(
             config.buildOptions.out + '/**/!(index).js'
           );
-          console.log(deletableFiles);
           deletableFiles.forEach((file) => {
             fs.unlink(file, (err) => {
               if (err) log('fs.unlink error');
