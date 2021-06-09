@@ -21,6 +21,8 @@ module.exports = function plugin(config, snowpackOptions) {
         js: files,
         compilation_level: snowpackOptions.compilationLevel || 'SIMPLE',
         js_output_file: tempOutputPath,
+        language_in: snowpackOptions.languageIn || 'ECMASCRIPT_NEXT',
+        language_out: snowpackOptions.languageOut || 'ECMASCRIPT5',
       });
 
       // save instance of child process to hang node process
