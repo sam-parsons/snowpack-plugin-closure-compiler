@@ -7,7 +7,9 @@
     "test": "jest"
   },
   "files": [
-    "plugin.js"
+    "plugin.js",
+    "util/generateSeparateFiles.js",
+    "util/generateBundle.js"
   ],
   "keywords": [
     "snowpack",
