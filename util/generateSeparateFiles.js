@@ -1,6 +1,7 @@
 const fs = require('fs');
+const { compiler } = require('google-closure-compiler');
 
-module.exports = function (files, config, snowpackOptions, compiler, log) {
+module.exports = function (files, config, snowpackOptions, log) {
   const compilerInstances = files.map((file, index) => {
     return new compiler({
       js: file,

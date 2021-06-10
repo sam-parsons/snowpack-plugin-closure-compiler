@@ -1,7 +1,8 @@
 const fs = require('fs');
 const glob = require('glob');
+const { compiler } = require('google-closure-compiler');
 
-module.exports = function (files, config, snowpackOptions, compiler, log) {
+module.exports = function (files, config, snowpackOptions, log) {
   // form base path of bundle directory
   const bundleDir = config.mount[config.root + '/src'].url;
   const base = config.root + '/build' + bundleDir;
