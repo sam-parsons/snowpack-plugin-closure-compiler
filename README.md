@@ -71,14 +71,14 @@ Determines type of processing performed by Closure Compiler - specify one of `BU
 Type: `string`<br>
 Default: `ECMASCRIPT_NEXT`
 
-Specifies what the most recent level of ECMASCRIPT used in the source code.  One of the following: `ECMASCRIPT3`, `ECMASCRIPT5`, `ECMASCRIPT5_STRICT`, `ECMASCRIPT_2015`, `ECMASCRIPT_2016`, `ECMASCRIPT_2017`, `ECMASCRIPT_2018`, `ECMASCRIPT_2019`, `STABLE`, `ECMASCRIPT_NEXT`
+Specifies what the most recent level of ECMAScript used in the source code.  One of the following: `ECMASCRIPT3`, `ECMASCRIPT5`, `ECMASCRIPT5_STRICT`, `ECMASCRIPT_2015`, `ECMASCRIPT_2016`, `ECMASCRIPT_2017`, `ECMASCRIPT_2018`, `ECMASCRIPT_2019`, `STABLE`, `ECMASCRIPT_NEXT`
 
 ### `languageOut`
 
 Type: `string`<br>
 Default: `ECMASCRIPT5`
 
-Determines ECMASCRIPT version of output file - use one of the values referenced in the `languageIn` property.
+Determines ECMAScript version of output file - use one of the values referenced in the `languageIn` property.
 
 ## Meta
 
