@@ -37,12 +37,20 @@ module.exports = {
   },
   plugins: ['snowpack-plugin-closure-compiler', {
     compilationLevel: "SIMPLE",
-    outputFile: "main.js"
+    outputFile: "main.js",
+    bundle: false
   }],
 };
 ```
 
 ## Options
+
+### `bundle`
+
+Type: `boolean`<br>
+Default: `true`
+
+The Closure Compiler can bundle all JavaScript files into and this is the default processing for the plugin.  If JavaScript files need to not be bundled, use `false`.
 
 ### `outputFile`
 
