@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = function (files, config, snowpackOptions, compiler, log) {
   const compilerInstances = files.map((file, index) => {
     return new compiler({
