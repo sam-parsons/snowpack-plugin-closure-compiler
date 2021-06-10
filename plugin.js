@@ -1,6 +1,7 @@
 const { compiler } = require('google-closure-compiler');
 const fs = require('fs');
 const glob = require('glob');
+const bundle = require('./util/bundle.js');
 
 module.exports = function plugin(config, snowpackOptions) {
   return {
@@ -9,46 +10,49 @@ module.exports = function plugin(config, snowpackOptions) {
       // retreive all javascript files in build directory
       const files = glob.sync(config.buildOptions.out + '/**/*.js');
 
-      // form base path of bundle directory
-      const bundleDir = config.mount[config.root + '/src'].url;
-      const base = config.root + '/build' + bundleDir;
+      if (!snowpackOptions.bundle) {
+        const compilerInstances = files.map((file, index) => {
+          return new compiler({
+            js: file,
+            compilation_level: snowpackOptions.compilationLevel || 'SIMPLE',
+            language_in: snowpackOptions.languageIn || 'ECMASCRIPT_NEXT',
+            language_out: snowpackOptions.languageOut || 'ECMASCRIPT5',
+          });
+        });
 
-      // path for intermittent bundle file
-      const tempOutputPath = base + '/temp.js';
+        const processPromises = compilerInstances.map((instance, index) => {
+          // save instance of child process to hang node process
+          const compilerProcess = instance.run((exitCode, stdOut, stdErr) => {
+            // handle user specified output file
+            // grab from compiler instance
+            const inputFile = instance.commandArguments
+              .filter((arg) => {
+                return arg.startsWith('--js');
+              })[0]
+              .slice(5);
 
-      // create instance of compiler with user options/defaults
-      const instance = new compiler({
-        js: files,
-        compilation_level: snowpackOptions.compilationLevel || 'SIMPLE',
-        js_output_file: tempOutputPath,
-        language_in: snowpackOptions.languageIn || 'ECMASCRIPT_NEXT',
-        language_out: snowpackOptions.languageOut || 'ECMASCRIPT5',
-      });
+            fs.writeFile(inputFile, stdOut, (err) => {
+              if (err) log(err);
+            });
+          });
 
-      // save instance of child process to hang node process
-      const compilerProcess = instance.run((exitCode, stdOut, stdErr) => {
-        // handle user specified output file
-        const writeFilePath =
-          base + '/' + (snowpackOptions.outputFile || 'index.js');
-        fs.writeFile(writeFilePath, tempOutputPath, (err) => {
-          // remove older js files
-          const deletableFiles = glob.sync(
-            config.buildOptions.out + '/**/!(index).js'
-          );
-          deletableFiles.forEach((file) => {
-            fs.unlink(file, (err) => {
-              if (err) log('fs.unlink error');
+          // return promise to wait for compiler completion
+          return new Promise((res, rej) => {
+            compilerProcess.on('exit', (arg) => {
+              log('closure compiler complete');
+              res();
+            });
+            compilerProcess.on('error', (err) => {
+              log('closure compiler err', err);
+              rej();
             });
           });
         });
-      });
 
-      // return promise to wait for compiler completion
-      return new Promise((res, rej) => {
-        log('closure compiler complete');
-        compilerProcess.on('exit', res);
-        compilerProcess.on('error', rej);
-      });
+        return Promise.all(processPromises);
+      }
+
+      return bundle(files, config, snowpackOptions, compiler, log);
     },
   };
 };
