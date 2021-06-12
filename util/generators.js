@@ -40,10 +40,15 @@ module.exports.generateBundle = function (files, config, snowpackOptions, log) {
 
   // return promise to wait for compiler completion
   return new Promise((res, rej) => {
-    log('closure compiler complete');
     compilerProcess.on('exit', res);
     compilerProcess.on('error', rej);
-  });
+  })
+    .then(() => {
+      log('closure compiler complete');
+    })
+    .catch((err) => {
+      log('error during compilation', err);
+    });
 };
 
 module.exports.generateSeparate = function (
