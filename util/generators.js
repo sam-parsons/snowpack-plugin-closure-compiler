@@ -9,7 +9,6 @@ module.exports.generateBundle = function (files, config, snowpackOptions, log) {
 
   // path for intermittent bundle file
   const tempOutputPath = base + '/temp.js';
-
   // create instance of compiler with user options/defaults
   const instance = new compiler({
     js: files,
@@ -28,7 +27,8 @@ module.exports.generateBundle = function (files, config, snowpackOptions, log) {
     fs.writeFile(writeFilePath, bundle, (err) => {
       // remove older js files
       const deletableFiles = glob.sync(
-        config.buildOptions.out + '/**/!(index).js'
+        config.buildOptions.out +
+          `/**/!(${snowpackOptions.outputFile.slice(0, -3) || 'index'}).js`
       );
       deletableFiles.forEach((file) => {
         fs.unlink(file, (err) => {
