@@ -5,6 +5,7 @@ module.exports = function plugin(config, snowpackOptions) {
   return {
     name: 'snowpack-plugin-closure-compiler',
     async optimize({ log }) {
+      const bundle = snowpackOptions.bundle == null || snowpackOptions.bundle;
       // retrieve all javascript files in build directory
       // form build directory absolute path
       const bundleDir = config.mount[config.root + '/src'].url;
@@ -17,7 +18,7 @@ module.exports = function plugin(config, snowpackOptions) {
 
       const generatorOptions = [files, config, snowpackOptions, log];
 
-      return snowpackOptions.bundle
+      return bundle
         ? generateBundle(...generatorOptions)
         : generateSeparate(...generatorOptions);
     },
