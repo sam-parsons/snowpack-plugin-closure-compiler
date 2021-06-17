@@ -5,4 +5,10 @@ describe('snowpack template plugin', () => {
     const obj = plugin();
     expect(obj.name).toEqual('snowpack-plugin-closure-compiler');
   });
+
+  test('optimize method returns a new Promise', () => {
+    const obj = plugin();
+    expect(obj.optimize()).toBeInstanceOf(Promise);
+    expect(obj.optimize().constructor.name).toBe('Promise');
+  });
 });
