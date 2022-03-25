@@ -8,8 +8,7 @@
   },
   "files": [
     "plugin.js",
-    "util/generateSeparateFiles.js",
-    "util/generateBundle.js"
+    "util/generators.js"
   ],
   "keywords": [
     "snowpack",
